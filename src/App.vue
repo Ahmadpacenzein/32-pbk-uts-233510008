@@ -69,7 +69,6 @@ const toggleComplete = id => {
           <span :class="{ completed: t.completed }">{{ t.text }}</span>
           <i class="fas fa-trash-alt delete-icon" @click="deleteTask(t.id)"></i>
         </div>
-        <!-- Jika tidak ada tugas -->
         <p v-if="filteredTasks.length === 0" class="empty">Belum ada tugas.</p>
       </div>
 
@@ -165,7 +164,6 @@ h1 {
 
 /* Filter card */
 .filter-card select {
-  color : var(--text);
   flex: 1;
   padding: 0.4rem 0.75rem;
   border: none;
@@ -236,7 +234,7 @@ h1 {
   opacity: 0.6;
 }
 
-/* Responsive adjustments */
+/* Responsive untuk mobile umum */
 @media (max-width: 480px) {
   .container {
     padding: 1rem;
@@ -252,6 +250,7 @@ h1 {
   }
   .input-card input, .filter-card select {
     width: 100%;
+    box-sizing: border-box;
   }
   .input-card button, .filter-card i {
     align-self: flex-end;
@@ -259,6 +258,38 @@ h1 {
   .task-item {
     padding: 0.5rem;
     gap: 0.5rem;
+  }
+}
+
+/* ===== Extra Mobile Fixes ===== */
+@media (max-width: 480px) {
+  /* Pastikan input-card dan filter-card kolom penuh */
+  .input-card,
+  .filter-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Input full width */
+  .input-card input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  /* Button full width & margin atas */
+  .input-card button {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  /* Select full width */
+  .filter-card select {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  /* Filter icon di pojok bawah */
+  .filter-card i {
+    margin-top: 0.5rem;
+    align-self: flex-end;
   }
 }
 </style>
