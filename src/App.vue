@@ -129,7 +129,7 @@ h1 {
 
 .input-card input {
   flex: 1;
-  padding: 0.5 rem;
+  padding: 0.6rem 1rem;
   border: none;
   border-radius: 10px;
   background: var(--base);
