@@ -109,7 +109,7 @@ button {
   align-items: center;
   gap: 12px;
   padding: 12px;
-  background: white;
+  background: rgba(255, 255, 255, 0.807);
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
@@ -123,9 +123,13 @@ button {
   flex: 1;
 }
 
+
 .task-text.completed {
   text-decoration: line-through;
-  opacity: 0.6;
+  text-decoration-color: #ff4444;
+  text-decoration-thickness: 2px;
+  color: #888; 
+  transition: all 0.3s ease; 
 }
 
 .delete-btn {
