@@ -1,9 +1,21 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 const newTask = ref('');
 const tasks = ref([]);
+const selectedFilter = ref('all'); // 'all', 'active', 'completed'
 let nextId = 1;
+
+const filteredTasks = computed(() => {
+  switch(selectedFilter.value) {
+    case 'active':
+      return tasks.value.filter(task => !task.completed);
+    case 'completed':
+      return tasks.value.filter(task => task.completed);
+    default:
+      return tasks.value;
+  }
+});
 
 const addTask = () => {
   if (newTask.value.trim()) {
@@ -42,9 +54,20 @@ const toggleComplete = (id) => {
       </button>
     </div>
 
+    <div class="filter-section">
+      <select v-model="selectedFilter" class="filter-select">
+        <option value="all">Semua</option>
+        <option value="active">Belum Selesai</option>
+        <option value="completed">Selesai</option>
+      </select>
+      <span class="filter-icon">
+        <i class="fas fa-filter"></i>
+      </span>
+    </div>
+
     <div class="task-list">
       <div 
-        v-for="task in tasks"
+        v-for="task in filteredTasks"
         :key="task.id"
         class="task-item"
       >
@@ -65,77 +88,30 @@ const toggleComplete = (id) => {
 </template>
 
 <style scoped>
+.filter-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.filter-select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+}
+
+.filter-icon {
+  color: #42b883;
+  font-size: 1.1rem;
+}
+
 .container {
   max-width: 600px;
   margin: 2rem auto;
   padding: 20px;
 }
 
-h1 {
-  color: #2c3e50;
-  text-align: center;
-}
-
-.input-section {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-input {
-  flex: 1;
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-button {
-  background: #42b883;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.task-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.task-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px;
-  background: rgba(255, 255, 255, 0.807);
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.check-icon {
-  color: #42b883;
-  cursor: pointer;
-}
-
-.task-text {
-  flex: 1;
-}
-
-
-.task-text.completed {
-  text-decoration: line-through;
-  text-decoration-color: #ff4444;
-  text-decoration-thickness: 2px;
-  color: #888; 
-  transition: all 0.3s ease; 
-}
-
-.delete-btn {
-  background: transparent;
-  color: #ff4444;
-  padding: 4px;
-  margin-left: auto;
-}
 </style>
