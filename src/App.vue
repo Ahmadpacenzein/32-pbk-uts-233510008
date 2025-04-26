@@ -41,7 +41,7 @@ const toggleComplete = id => {
           placeholder="Tambahkan tugas baru..."
         />
         <button @click="addTask">
-          <i class="fas fa-plus"></i>Tambah
+          <i class="fas fa-plus"></i> Tambah
         </button>
       </div>
 
@@ -69,13 +69,19 @@ const toggleComplete = id => {
           <span :class="{ completed: t.completed }">{{ t.text }}</span>
           <i class="fas fa-trash-alt delete-icon" @click="deleteTask(t.id)"></i>
         </div>
+        <!-- Jika tidak ada tugas -->
+        <p v-if="filteredTasks.length === 0" class="empty">Belum ada tugas.</p>
       </div>
+
+      <!-- Footnote -->
+      <footer class="footnote">
+        Made by PacenZein
+      </footer>
     </div>
   </div>
 </template>
 
 <style>
-
 :root {
   --base: #2e2e2e;
   --light: #383838;
@@ -93,6 +99,7 @@ html, body {
   color: var(--text);
 }
 
+/* Wrapper untuk memusatkan */
 .wrapper {
   min-height: 100%;
   display: flex;
@@ -101,21 +108,27 @@ html, body {
   padding: 1rem;
 }
 
+/* Container utama */
 .container {
   background: var(--base);
   border-radius: 30px;
   box-shadow: 8px 8px 16px var(--dark), -8px -8px 16px var(--light);
-  max-width: 600px;
   width: 100%;
+  max-width: 600px;
   padding: 2rem;
+  display: flex;
+  flex-direction: column;
 }
 
+/* Judul */
 h1 {
   text-align: center;
   color: var(--accent);
   margin-bottom: 1.5rem;
+  font-size: 2rem;
 }
 
+/* Base card */
 .card {
   background: var(--base);
   border-radius: 20px;
@@ -127,6 +140,7 @@ h1 {
   gap: 0.5rem;
 }
 
+/* Input card */
 .input-card input {
   flex: 1;
   padding: 0.6rem 1rem;
@@ -146,9 +160,12 @@ h1 {
   box-shadow: 4px 4px 8px var(--dark), -4px -4px 8px var(--light);
   cursor: pointer;
   color: var(--light);
+  font-weight: 600;
 }
 
+/* Filter card */
 .filter-card select {
+  color : var(--text);
   flex: 1;
   padding: 0.4rem 0.75rem;
   border: none;
@@ -156,6 +173,7 @@ h1 {
   background: var(--base);
   box-shadow: inset 4px 4px 8px var(--dark), inset -4px -4px 8px var(--light);
   color: var(--text);
+  font-size: 1rem;
 }
 
 .filter-card i {
@@ -164,9 +182,10 @@ h1 {
   padding-right: 0.5rem;
 }
 
+/* List card */
 .list-card {
   flex-direction: column;
-  padding: 1.2rem;
+  padding: 1rem;
 }
 
 .task-item {
@@ -200,13 +219,46 @@ h1 {
   color: #bbb;
 }
 
+/* Pesan kosong */
+.empty {
+  text-align: center;
+  color: var(--text);
+  opacity: 0.7;
+  font-style: italic;
+}
+
+/* Footnote */
+.footnote {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text);
+  margin-top: auto;
+  opacity: 0.6;
+}
+
+/* Responsive adjustments */
 @media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
   .card {
     flex-direction: column;
+    padding: 0.5rem;
+    gap: 0.25rem;
   }
-  .input-card button,
-  .filter-card i {
+  .input-card input, .filter-card select {
+    width: 100%;
+  }
+  .input-card button, .filter-card i {
     align-self: flex-end;
+  }
+  .task-item {
+    padding: 0.5rem;
+    gap: 0.5rem;
   }
 }
 </style>
